@@ -109,7 +109,7 @@ const LoginFrom = () => {
                     {isLoading ? "Loading..." : "Login"}
                 </button>
 
-               
+
                 <p className='text-center'>
                     Already a user? {" "}
                     <Link href={"/signup"} className='text-primaryColor'>
