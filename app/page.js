@@ -8,10 +8,10 @@ export default function Home() {
       <div className="basis-full flex-col flex justify-center md:basis-2/3">
         <p>Project all thie Birds</p>
         <h1 className="pb-5">
-          The world's <span className="special-word">Rarset</span><br /> Birds
+          The world&apos;s <span className="special-word">Rarset</span><br /> Birds
         </h1>
         <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry&apos;s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has
         </p>
 
       </div>
