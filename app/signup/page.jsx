@@ -2,7 +2,8 @@
 import SignupFrom from '../../components/SignupFrom';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
-import authOptions from "../../lib/authOptions"
+import authOptions from "../../app/api/auth/[...nextauth]/route"
+
 
 
 
@@ -12,7 +13,6 @@ const Signup = async () => {
   if (session) {
     redirect("/blog");
   }
-
 
   return (
     <div>
