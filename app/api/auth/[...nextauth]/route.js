@@ -5,8 +5,7 @@ import User from "../../../../models/User";
 import bcrypt from "bcrypt";
 import NextAuth from "next-auth/next";
 
-
-export const authOptions = {
+const authOptions = {
     providers: [
         Credentials({
             type: "credentials",

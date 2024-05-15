@@ -38,7 +38,7 @@ const BlogDetails = ({ params }) => {
 
     useEffect(() => {
         fetchBlog();
-    }, []);
+    }, [fetchBlog]);
 
 
     const timeStr = blogDetails?.createdAt;
