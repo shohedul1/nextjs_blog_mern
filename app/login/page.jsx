@@ -1,18 +1,20 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import LoginFrom from '../../components/LoginFrom';
 import { useSession } from 'next-auth/react';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 
 
 const Login =  () => {
   const { data: session } = useSession();
+  const router = useRouter();
 
-  if (session) {
-    redirect("/blog");
-  }
-
+  useEffect(()=>{
+    if (session) {
+      router.push("/blog")
+    }
+  },[session]);
   return (
     <div>
       <LoginFrom />
