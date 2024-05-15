@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import LoginFrom from '../../components/LoginFrom';
 import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 
 
