@@ -6,15 +6,15 @@ import { useRouter } from 'next/navigation';
 
 
 
-const Login =  () => {
+const Login = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  useEffect(()=>{
+  useEffect(() => {
     if (session) {
       router.push("/blog")
     }
-  },[session]);
+  }, [session]);
   return (
     <div>
       <LoginFrom />

@@ -1,4 +1,3 @@
-
 'use client';
 import { useSession } from 'next-auth/react';
 import SignupFrom from '../../components/SignupFrom';
@@ -11,11 +10,11 @@ const Signup = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  useEffect(()=>{
+  useEffect(() => {
     if (session) {
       router.push("/blog")
     }
-  },[session]);
+  }, [session]);
   return (
     <div>
       <SignupFrom />

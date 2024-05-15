@@ -21,7 +21,17 @@ const BlogDetails = ({ params }) => {
     const [blogDetails, setBlogDetails] = useState({});
     const [isDeleting, setisDeleting] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
-    const [blogLikes, setBlogLikes] = useState(0)
+    const [blogLikes, setBlogLikes] = useState(0);
+
+    const [commentText, setCommentText] = useState("");
+    const [isCommenting, setCommenting] = useState(false);
+    const [blogComments, setBlogComments] = useState(0);
+
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+
+
+
 
 
     async function fetchBlog() {
@@ -31,6 +41,9 @@ const BlogDetails = ({ params }) => {
             setBlogDetails(blog);
             setIsLiked(blog?.likes?.includes(session?.user?._id));
             setBlogLikes(blog?.likes?.length || 0);
+            setBlogComments(blog?.comments?.length || 0);
+
+
         } catch (error) {
             console.error('Error fetching blog:', error);
         }
@@ -100,6 +113,81 @@ const BlogDetails = ({ params }) => {
             console.log(error);
         }
     };
+
+
+    const handleCommentSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!commentText.trim()) {
+            setError("Comment text is required.");
+            return;
+        }
+
+        try {
+            setCommenting(true);
+            setError("");
+            setSuccess("");
+
+            const newComment = {
+                text: commentText
+            };
+
+            const response = await fetch(`/api/blog/${params.id}/comment`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${session?.user?.accessToken}`
+                },
+                method: "POST",
+                body: JSON.stringify(newComment)
+            });
+
+            if (response.ok) {
+                setSuccess("Comment created successfully");
+                setTimeout(() => {
+                    setCommentText("");
+                    fetchBlog();
+                }, 500);
+            } else {
+                setError("Error occurred while creating comment.");
+            }
+        } catch (error) {
+            console.log(error);
+            setError("An error occurred while submitting the comment.");
+        } finally {
+            setCommenting(false);
+        }
+    };
+
+
+    const handleDeleteComment = async (commentId) => {
+        try {
+            const response = await fetch(`/api/blog/${params.id}/comment/${commentId}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${session?.user?.accessToken}`
+                },
+                method: "DELETE",
+            });
+
+            if(response.ok){
+                fetchBlog();
+            }else{
+                console.log("Request failed with status:", response.status);
+            }
+
+            
+        } catch (error) {
+            console.log(error);
+            setError("An error occurred while submitting the comment.");
+        } finally {
+            setCommenting(false);
+        }
+
+    }
+
+
+
+
 
 
     return (
@@ -186,43 +274,67 @@ const BlogDetails = ({ params }) => {
                     <div className='flex items-center gap-1'>
                         <p>12</p>
                         <AiOutlineComment size={20} className='cursor-pointer' />
-
                     </div>
                 </div>
-
             </div>
 
             <div>
-                <h3 className='text-red-500'>kindly login to leave a comment.</h3>
-                <form className='space-y-2'>
-                    <Input
-                        name="comment"
-                        type="text"
-                        placeholder='Type message....'
-                    />
-                    <button className="btn" type='submit'>
-                        comment
-                    </button>
-                </form>
-                <div className='flex gap-3 items-cente py-5'>
-                    <Image
-                        src={homeImage}
-                        alt='avater image'
-                        width={0}
-                        height={0}
-                        sizes='100vw'
-                        className='w-10 h-10 rounded-full'
-                    />
-                    <div>
-                        <p className="text-whiteColor">Jhon</p>
-                        <p>This is our frist comment</p>
-                    </div>
-                    <BsTrash cursor="poiner" className='text-red-500 ml-10' />
+                {
+                    !session?.user && (
+                        <h3 className='text-red-500'>kindly login to leave a comment.</h3>
+                    )
+                }
 
-                </div>
+                {
+                    session?.user && (
+                        <form className='space-y-2' onSubmit={handleCommentSubmit}>
+
+                            <Input
+                                onChange={(e) => setCommentText(e.target.value)}
+                                value={commentText}
+                                name="comment"
+                                type="text"
+                                placeholder='Type message....'
+                            />
+
+                            <button className="btn" type='submit'>
+                                {isCommenting ? "Loading..." : "comment"}
+                            </button>
+                        </form>
+
+                    )
+                }
+
+                {blogDetails?.comments && blogDetails?.comments.length === 0 && (
+                    <p>No comments</p>
+                )}
+                {blogDetails?.comments && blogDetails?.comments.length > 0 && (
+                    <>
+                        {blogDetails.comments.map((comment) => (
+                            <div key={comment._id} className='flex gap-3 items-cente py-5'>
+                                <Image
+                                    src={comment?.user?.avatar?.user ? comment?.user?.avatar?.url : homeImage}
+                                    alt='avater image'
+                                    width={0}
+                                    height={0}
+                                    sizes='100vw'
+                                    className='w-10 h-10 rounded-full'
+                                />
+                                <div>
+                                    <p className="text-whiteColor">{comment?.user?.name}</p>
+                                    <p>{comment?.text}</p>
+                                </div>
+                                {
+                                    session?.user?._id === comment?.user?._id && (
+                                        <BsTrash onClick={() => handleDeleteComment(comment._id)} cursor="poiner" className='text-red-500 ml-10' />
+                                    )
+                                }
+
+                            </div>
+                        ))}
+                    </>
+                )}
             </div>
-
-
         </section>
     )
 }

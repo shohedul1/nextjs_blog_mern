@@ -130,6 +130,8 @@ const CreateBlog = () => {
 
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsLoading(false)
     }
 
   }
