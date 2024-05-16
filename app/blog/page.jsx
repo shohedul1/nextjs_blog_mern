@@ -10,14 +10,16 @@ async function fetchBlogs() {
   if (res.ok) {
     return res.json();
   }
+
 }
 
 const Blog = async () => {
- 
+
   const blogs = await fetchBlogs();
 
   const fristBlog = blogs && blogs[0];// single data convert
   const otherBlogs = blogs?.length > 0 && blogs.slice(1);
+  console.log(fristBlog);
 
   return (
     <div>

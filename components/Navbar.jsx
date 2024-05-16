@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -7,12 +7,36 @@ import { usePathname } from 'next/navigation';
 import homeLogo from "../image/knight.png";
 import { signOut, useSession } from 'next-auth/react';
 
+
 const Navbar = () => {
+  const [userData, setUserData] = useState({});
   const { data: session, status } = useSession();
 
   const pathname = usePathname();
 
   const [showDropdown, setShowDropdown] = useState(false); // Use array destructuring
+
+  async function fetchUser() {
+    try {
+      const res = await fetch(`/api/user/${session?.user?._id}`);
+
+      if (res.ok) {
+        const resData = await res.json();
+        setUserData(resData);
+      }
+
+    } catch (error) {
+      console.log(error);
+
+    }
+  }
+
+
+  useEffect(() => {
+    fetchUser();
+  }, [session?.user?._id]);
+
+  
 
   const handleShowDropdown = () => setShowDropdown((prev) => true);
   const handleHideDropdown = () => setShowDropdown((prev) => false);
@@ -40,7 +64,7 @@ const Navbar = () => {
                 <div className="relative">
                   <Image
                     onClick={handleShowDropdown}
-                    src={homeLogo}
+                    src={userData?.avatar?.url || homeLogo}
                     width={500}
                     height={500}
                     property="true"
@@ -57,7 +81,7 @@ const Navbar = () => {
                         Logout
                       </button>
                       <Link
-                        href={"/user"}
+                        href={`/user/${session?.user?._id.toString()}`}
                         onClick={handleHideDropdown}
                         className={pathname === "/user" ? 'text-primaryColor font-bold' : ""}>
                         Profile

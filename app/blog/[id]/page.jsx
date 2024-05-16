@@ -272,7 +272,7 @@ const BlogDetails = ({ params }) => {
                     </div>
 
                     <div className='flex items-center gap-1'>
-                        <p>12</p>
+                        <p>{blogComments}</p>
                         <AiOutlineComment size={20} className='cursor-pointer' />
                     </div>
                 </div>

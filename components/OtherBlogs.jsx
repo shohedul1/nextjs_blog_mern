@@ -26,6 +26,7 @@ const OtherBlogs = ({ otherBlogs }) => {
                                         alt='frist blog image'
                                         width={0}
                                         height={0}
+                                        property="true"
                                         sizes='100vw'
                                         className='w-full h-full rounded-lg mb-2'
                                     />
@@ -49,9 +50,10 @@ const OtherBlogs = ({ otherBlogs }) => {
 
                                     <div className='flex items-center gap-3'>
                                         <Image
-                                            src={item?.authorId?.image?.avatar?.url ? item?.authorId?.image : homeImage}
+                                            src={item?.authorId?.avatar?.url ? item?.authorId?.avatar?.url : homeImage}
                                             alt='image'
                                             width={0}
+                                            property="true"
                                             height={0}
                                             sizes='100vw'
                                             className='w-10 h-10 rounded-full'
@@ -59,8 +61,6 @@ const OtherBlogs = ({ otherBlogs }) => {
                                         <div className='text-xl'>
                                             <h6>{item?.authorId?.name}</h6>
                                             <p className='text-paragraphColor'>{item?.authorId?.designation}</p>
-
-
                                         </div>
 
                                     </div>

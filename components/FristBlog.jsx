@@ -19,8 +19,9 @@ const FristBlog = ({ fristBlog }) => {
                 <div className='flex flex-col md:flex-row space-x-5 items-center '>
                     <div className='w-full lg:w-2/5'>
                         <Image
-                            src={fristBlog?.image ? fristBlog?.image.url : homeImage}
+                            src={fristBlog?.image?.url ? fristBlog?.image?.url : homeImage}
                             alt='frist blog image'
+                            priority={false}
                             width={0}
                             height={0}
                             sizes='100vw'
@@ -46,7 +47,7 @@ const FristBlog = ({ fristBlog }) => {
 
                         <div className='flex items-center gap-3'>
                             <Image
-                                src={fristBlog?.authorId?.avatar?.url ? fristBlog?.authorId?.image : homeImage}
+                                src={fristBlog?.authorId?.avatar?.url ? fristBlog?.authorId?.avatar?.url : homeImage}
                                 alt='image'
                                 width={0}
                                 height={0}
