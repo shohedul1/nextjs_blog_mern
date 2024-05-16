@@ -1,7 +1,7 @@
 //api url http://localhost:3000/api/user/someId
 
 import { connect } from "../../../../lib/db";
-import Blog from "../../../../../my-app/models/User";
+import Blog from "../../../../models/Blog";
 import { verifyJwtToken } from "../../../../lib/jwt";
 import { NextResponse } from 'next/server'
 import User from "../../../../models/User";
