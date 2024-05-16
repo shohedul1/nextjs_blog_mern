@@ -8,7 +8,7 @@ import homeLogo from "../../../image/knight.png";
 import moment from "moment";
 import Modal from "../../../components/Modal";
 import Input from "../../../components/Input"
-import { deletePhoto } from '../../../../my-app/actions/uploadActions';
+import { deletePhoto } from '../../../actions/uploadActions';
 
 import { AiOutlineClose } from "react-icons/ai";
 

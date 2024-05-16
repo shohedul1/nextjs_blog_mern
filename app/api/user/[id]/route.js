@@ -1,10 +1,10 @@
 //api url http://localhost:3000/api/user/someId
 
-import { connect } from "../../../../../my-app/lib/db";
+import { connect } from "../../../../lib/db";
 import Blog from "../../../../../my-app/models/User";
-import { verifyJwtToken } from "../../../../../my-app/lib/jwt";
+import { verifyJwtToken } from "../../../../lib/jwt";
 import { NextResponse } from 'next/server'
-import User from "../../../../../my-app/models/User";
+import User from "../../../../models/User";
 
 
 //update any single api id
