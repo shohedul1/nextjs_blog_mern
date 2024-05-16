@@ -313,7 +313,7 @@ const BlogDetails = ({ params }) => {
                         {blogDetails.comments.map((comment) => (
                             <div key={comment._id} className='flex gap-3 items-cente py-5'>
                                 <Image
-                                    src={comment?.user?.avatar?.user ? comment?.user?.avatar?.url : homeImage}
+                                    src={comment?.user?.avatar?.url ? comment?.user?.avatar?.url : homeImage}
                                     alt='avater image'
                                     width={0}
                                     height={0}
